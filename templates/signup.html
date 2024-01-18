@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Signup{% endblock %}</title>
+    {% block head %}
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/main.css') }}"
+    />
+    {% endblock %}
+  </head>
+  <body>
+    <div class="nav">
+      <a href="{{url_for('signup')}}">Signup</a>
+      <a href="{{url_for('login')}}">Login</a>
+    </div>
+
+    <h1>SIGNUP</h1>
+
+    <div class="container">
+      {% with messages = get_flashed_messages() %} {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %} {% endwith %}
+
+      <form action="/signup" method="post">
+        <input
+          type="text"
+          name="email"
+          id=""
+          placeholder="Email Address"
+          required
+        />
+        <input type="text" name="name" id="" placeholder="Full Name" required />
+        <input
+          type="text"
+          name="lname"
+          id=""
+          placeholder="Last Name"
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          id=""
+          placeholder="Password"
+          required
+        />
+        <input
+          type="password"
+          name="cpassword"
+          id=""
+          placeholder="Confirm Password"
+        />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+<!-- add_notes.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Notes</title>
+  </head>
+  <body>
+    <nav><a href="{{url_for('logout')}}">Logout</a></nav>
+    <h1>Add Notes</h1>
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <ul>
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %} {% endwith %}
+    <form method="POST" action="/notes">
+      <label for="title">Note Title:</label>
+      <input type="text" id="title" name="title" required />
+      <br />
+      <label for="content">Note Content:</label>
+      <textarea id="content" name="content" required></textarea>
+      <br />
+      <input type="submit" value="Add Note" />
+    </form>
+    {% if data %}
+    <h2>Notes</h2>
+    <ul>
+      {% for key, value in data.items() %}
+      <li>{{ key }}: {{ value }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </body>
+</html>

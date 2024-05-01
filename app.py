@@ -4,11 +4,11 @@ from flask_login import LoginManager,UserMixin,login_user,login_required,logout_
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'LoosuBabe!00'
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'lastdb'
+app.config['SECRET_KEY'] = 'ankurgupta29'
+app.config['MYSQL_HOST'] = 'database-1.cdemiowkayx7.us-east-1.rds.amazonaws.com'
+app.config['MYSQL_USER'] = 'admin'
+app.config['MYSQL_PASSWORD'] = 'mysql1234'
+app.config['MYSQL_DB'] = 'mysqldb'
 
 mysql = MySQL(app)
 login_manager=LoginManager()
@@ -102,14 +102,21 @@ def logout():
 def notes():
     if request.method == 'POST':
         title = request.form.get('title')
-        content = request.form.get('content')
-        data = {
-            'title': title,
-            'content': content
-        }
-        return render_template('notes.html', data=data)
+        note = request.form.get('note')
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO notes (user_id, title, note) VALUES (%s, %s, %s)",
+                    (current_user.id, title, note))
+        mysql.connection.commit()
+        cur.close()
+        flash('Note added successfully', 'success')
+        return redirect('/notes')
     else:
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM notes WHERE user_id=%s", (current_user.id,))
+        notes_data = cur.fetchall()
+        cur.close()
         return render_template('notes.html')
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host = '0.0.0.0',port = 5000 ,debug=True)
+

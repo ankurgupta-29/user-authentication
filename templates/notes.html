@@ -1,37 +1,107 @@
-<!-- add_notes.html -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Notes</title>
-  </head>
-  <body>
-    <nav><a href="{{url_for('logout')}}">Logout</a></nav>
-    <h1>Add Notes</h1>
-    {% with messages = get_flashed_messages() %} {% if messages %}
-    <ul>
-      {% for message in messages %}
-      <li>{{ message }}</li>
-      {% endfor %}
-    </ul>
-    {% endif %} {% endwith %}
-    <form method="POST" action="/notes">
-      <label for="title">Note Title:</label>
-      <input type="text" id="title" name="title" required />
-      <br />
-      <label for="content">Note Content:</label>
-      <textarea id="content" name="content" required></textarea>
-      <br />
-      <input type="submit" value="Add Note" />
-    </form>
-    {% if data %}
-    <h2>Notes</h2>
-    <ul>
-      {% for key, value in data.items() %}
-      <li>{{ key }}: {{ value }}</li>
-      {% endfor %}
-    </ul>
-    {% endif %}
-  </body>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        nav {
+            background-color: #333;
+            padding: 10px;
+            color: white;
+            text-align: right;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+        }
+        nav a:hover {
+            background-color: #555;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin-top: 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+        input[type="submit"] {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        input[type="submit"]:hover {
+            background-color: #555;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        li span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <nav><a href="{{ url_for('logout') }}">Logout</a></nav>
+    <div class="container">
+        <h1>Add Notes</h1>
+        {% with messages = get_flashed_messages() %} {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %} {% endwith %}
+        <form method="POST" action="/notes">
+            <label for="title">Note Title:</label>
+            <input type="text" id="title" name="title" required />
+            <label for="content">Note Content:</label>
+            <textarea id="content" name="content" rows="5" required></textarea>
+            <input type="submit" value="Add Note" />
+        </form>
+        {% if notes %}
+        <h2>Notes</h2>
+        <ul>
+            {% for note in notes %}
+            <li><span>Title:</span> {{ note['title'] }}</li>
+            <li><span>Content:</span> {{ note['note'] }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+</body>
 </html>
+

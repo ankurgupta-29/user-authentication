@@ -77,13 +77,6 @@ The application should be running on [http://127.0.0.1:5000/](http://127.0.0.1:5
 3. Once logged in, you can create and view your notes on the '/notes' page.
 4. Log out when you're done.
 
-## Contributing
-
-Contributions are welcome! Please check the [CONTRIBUTING.md](CONTRIBUTING.md) file for more details.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
 
 ---
 
